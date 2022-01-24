@@ -22,7 +22,9 @@ Link
 } from "@chakra-ui/react";
 import { IoMdPhotos } from "react-icons/io";
 import { BsThreeDots, BsPlusCircle } from "react-icons/bs";
-import { BiPhotoAlbum } from "react-icons/bi";
+import { BiPhotoAlbum,BiHeart } from "react-icons/bi";
+import styles from '../styles/UserProfile-Photo.module.css'
+
 
 const Photos = [
   {
@@ -172,16 +174,22 @@ export function PhotoGallery() {
             </Text>
           </Flex>
         </GridItem>
-        {Photos.map(({ image }, idx) => (
+          {Photos.map(({ image }, idx) => (
+
           <GridItem colSpan={{ base: 4, md: 1, lg: 1 }}>
-            <Flex key={idx} direction="column" h="full" align="center">
-              <Image
+              <Flex key={idx} direction="column" h="full" align="center">
+                <Box className={styles.pic}>
+                  <Box className={styles.PhotoContainer}>
+                  <BiHeart />
+                  </Box>
+                  <Image
                 boxSize="290"
                 w="full"
                 objectFit="cover"
                 src={image}
                 borderRadius="5px"
-              />
+                  />
+                       </Box>
               <Flex
                 h="190"
                 bg="white"
@@ -197,7 +205,8 @@ export function PhotoGallery() {
                 </Text>
               </Flex>
             </Flex>
-          </GridItem>
+              </GridItem>
+
         ))}
         </SimpleGrid>
       </Box>
