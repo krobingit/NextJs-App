@@ -5,23 +5,21 @@ import {
   Spacer,
   SimpleGrid,
   GridItem,
-  Button,
   Image,
   Heading,
-  IconButton,
   HStack,
   VStack,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { IoMdPhotos } from "react-icons/io";
 import { BsThreeDots, BsPlusCircle } from "react-icons/bs";
 import { BiPhotoAlbum, BiHeart } from "react-icons/bi";
 import styles from "../styles/photos.module.css";
-import { CreateAlbum } from "./create-album";
+import { CreateAlbumSquare, CreateAlbumCircle } from "./create-album";
 import { AddPhotos } from "./add-photos";
 import { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { PhotoDialog } from "./photo-dialog-box";
 
 const SamplePhotos = [
   {
@@ -44,7 +42,6 @@ const SamplePhotos = [
 
 export function Photos() {
   const fontStyle = { cursor: "pointer", "&:hover": { color: "orange" } };
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [show, setShow] = useState(false);
   return (
     <Box p="5">
@@ -72,39 +69,27 @@ export function Photos() {
           gap="3"
           direction={{ base: "column", md: "row" }}
         >
-          <Button
-            bg="#ff5e3a"
-            color="white"
-            _hover={{ bg: "#ff763a" }}
-            size="md"
-            w={{ base: "full", md: "min-content" }}
-            onClick={onOpen}
-          >
-            Create Album+
-          </Button>
-          <CreateAlbum isOpen={isOpen} onClose={onClose} />
+          <CreateAlbumSquare />
           <AddPhotos />
 
           <Flex direction={{ base: "row" }} align="center">
             <Box p="5">
               <IoMdPhotos
                 size="25px"
-                 className={styles.Icon}
+                className={styles.Icon}
                 onClick={() => setShow(true)}
               />
             </Box>
             <Box p="5">
               <BiPhotoAlbum
                 size="25px"
-                 className={styles.Icon}
+                className={styles.Icon}
                 onClick={() => setShow(false)}
               />
             </Box>
             <Box p="5">
               <BsThreeDots size="25px" className={styles.Icon} />
             </Box>
-
-
           </Flex>
         </Flex>
       </Flex>
@@ -151,16 +136,7 @@ export function Photos() {
                 align="center"
                 justify="center"
               >
-                <BsPlusCircle
-                  style={{
-                    fontSize: "40px",
-                    cursor: "pointer",
-                    color: "white",
-                    background: "#ff5e3a",
-                    borderRadius: "50%",
-                  }}
-                  onClick={onOpen}
-                />
+                <CreateAlbumCircle />
                 <Heading size="sm">Create an Album</Heading>
                 <Text color="#888da8" fontSize="11px">
                   It only takes a few minutes!
@@ -170,27 +146,7 @@ export function Photos() {
             {SamplePhotos.map(({ image }, idx) => (
               <GridItem colSpan={{ base: 4, md: 1, lg: 1 }}>
                 <Flex key={idx} direction="column" h="full" align="center">
-                  <Box className={styles.PhotoContainer}>
-                    <Box className={styles.HoverContainer}>
-                      <BsThreeDots
-                        style={{
-                          margin: "10px 18px 0px auto",
-                          fontSize: "20px",
-                        }}
-                      />
-                      <HStack mb={10} fontSize="18px" ml="auto" mr="18px">
-                        <BiHeart />
-                        <Text color="darkgray !important">324</Text>
-                      </HStack>
-                    </Box>
-                    <Image
-                      boxSize="250"
-                      w="full"
-                      objectFit="cover"
-                      src={image}
-                      borderRadius="5px"
-                    />
-                  </Box>
+                  <PhotoDialog image={image} />
                   <VStack bg="white" w="full" p="25">
                     <Heading size="sm">Vacations</Heading>
                     <Text color="#888da8" fontSize="11px">
